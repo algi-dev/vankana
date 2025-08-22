@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+/* Style untuk section Rooms */
+.rooms {
+    background: #f8f9fa;
+    padding: 60px 0;
+}
+
+.rooms h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.rooms .card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rooms .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.rooms .card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.rooms .card-body h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.rooms .card-body p {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.rooms .fw-bold {
+    font-size: 16px;
+    color: #16a085;
+}
+
+.rooms .btn-primary {
+    background: #16a085;
+    border: none;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 8px 18px;
+    transition: background 0.3s ease;
+}
+
+.rooms .btn-primary:hover {
+    background: #13856e;
+}
