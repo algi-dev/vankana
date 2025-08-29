@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class RoomController extends Controller
@@ -35,14 +35,14 @@ class RoomController extends Controller
             'slug' => 'required|string|max:100|unique:rooms,slug',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'image' => 'required|file|image|max:2048', // harus file gambar, maks 2MB
+            'image' => 'required|file|image|max:2048|mimes:jpeg,png,jpg,webp,gif',
             'booking_link' => 'required|url',
             'status' => 'required|boolean',
             'capacity' => 'nullable|integer',
             'size' => 'nullable|string|max:50',
         ]);
 
-        // Simpan gambar
+        // Simpan gambar ke storage
         $imagePath = $this->storeImage($request->file('image'));
 
         // Simpan ke database
@@ -68,24 +68,24 @@ class RoomController extends Controller
             'slug' => 'required|string|max:100|unique:rooms,slug,' . $id,
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'image' => 'nullable|file|image|max:2048', // boleh diganti, boleh kosong
+            'image' => 'nullable|file|image|max:2048|mimes:jpeg,png,jpg,webp,gif',
             'booking_link' => 'required|url',
             'status' => 'required|boolean',
             'capacity' => 'nullable|integer',
             'size' => 'nullable|string|max:50',
         ]);
 
-        // Data dasar
+        // Data dasar (kecuali image)
         $data = $request->except('image');
 
-        // Jika ada gambar baru diupload
+        // Jika ada gambar baru
         if ($request->hasFile('image')) {
-            // Hapus gambar lama
+            // Hapus gambar lama dari storage
             $this->deleteImage($room->image);
             // Simpan gambar baru
             $data['image'] = $this->storeImage($request->file('image'));
         } else {
-            // Tetap gunakan gambar lama
+            // Pertahankan gambar lama
             $data['image'] = $room->image;
         }
 
@@ -98,7 +98,7 @@ class RoomController extends Controller
     {
         $room = Room::findOrFail($id);
 
-        // Hapus gambar dari folder public/images jika ada
+        // Hapus file gambar dari storage
         $this->deleteImage($room->image);
 
         $room->delete();
@@ -109,7 +109,9 @@ class RoomController extends Controller
     // === Helper Methods ===
 
     /**
-     * Simpan gambar ke public/images dan return path-nya
+     * Simpan gambar ke storage/app/public/images
+     * @param \Illuminate\Http\UploadedFile $file
+     * @return string
      */
     private function storeImage($file)
     {
@@ -117,18 +119,28 @@ class RoomController extends Controller
         $extension = $file->getClientOriginalExtension();
         $filename = $name . '.' . $extension;
 
-        $file->move(public_path('images'), $filename);
+        // Simpan ke disk 'public' → storage/app/public/images
+        $path = $file->storeAs('images', $filename, 'public');
 
-        return 'images/' . $filename; // simpan path relatif
+        // Kembalikan path untuk disimpan di DB: storage/images/filename.jpg
+        return 'storage/' . $path;
     }
 
     /**
-     * Hapus gambar dari folder public/images
+     * Hapus gambar dari storage
+     * @param string $imagePath
+     * @return void
      */
     private function deleteImage($imagePath)
     {
-        if ($imagePath && File::exists(public_path($imagePath))) {
-            File::delete(public_path($imagePath));
+        if ($imagePath) {
+            // Ubah 'storage/images/...' → 'images/...'
+            $storagePath = str_replace('storage/', '', $imagePath);
+
+            // Hapus jika file ada
+            if (Storage::disk('public')->exists($storagePath)) {
+                Storage::disk('public')->delete($storagePath);
+            }
         }
     }
 }

@@ -42,16 +42,29 @@
             </div>
         </div>
 
+        <!-- Upload Gambar dengan Tombol -->
         <div class="mb-4">
             <label class="block mb-1 font-medium">Upload Gambar Kamar</label>
+
+            <!-- Hidden File Input -->
             <input
                 type="file"
                 name="image"
                 id="imageInput"
-                class="w-full border rounded p-2"
+                class="hidden"
                 accept="image/jpeg,image/png,image/webp,image/gif"
                 required>
-            <p class="text-sm text-gray-500 mt-1">Format: JPG, PNG, WEBP. Maks 2MB.</p>
+
+            <!-- Custom Button -->
+            <button
+                type="button"
+                onclick="document.getElementById('imageInput').click();"
+                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                📁 Pilih File Gambar
+            </button>
+
+            <!-- File Name Preview -->
+            <p id="fileName" class="text-sm text-gray-600 mt-2">Belum ada file dipilih</p>
         </div>
 
         <div class="mb-4">
@@ -74,8 +87,15 @@
     </form>
 </div>
 
-<!-- Konfirmasi Upload Gambar -->
+<!-- Script: Tampilkan Nama File & Konfirmasi -->
 <script>
+// Tampilkan nama file setelah dipilih
+document.getElementById('imageInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    document.getElementById('fileName').textContent = file ? file.name : 'Belum ada file dipilih';
+});
+
+// Konfirmasi upload
 document.querySelector('form').addEventListener('submit', function(e) {
     const input = document.getElementById('imageInput');
     if (input.files && input.files[0]) {
