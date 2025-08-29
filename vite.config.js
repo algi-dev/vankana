@@ -7,20 +7,19 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
+            // Konfigurasi khusus untuk manifest
+            buildDirectory: 'build',
         }),
         tailwindcss(),
     ],
     build: {
+        // Jangan set manifest secara manual, biarkan Laravel plugin yang handle
         outDir: 'public/build',
         emptyOutDir: true,
-        manifest: true,
         assetsDir: 'assets',
         rollupOptions: {
             output: {
                 manualChunks: undefined,
-                entryFileNames: 'assets/[name]-[hash].js',
-                chunkFileNames: 'assets/[name]-[hash].js',
-                assetFileNames: 'assets/[name]-[hash].[ext]'
             },
         },
     },
@@ -31,12 +30,4 @@ export default defineConfig({
             host: 'localhost',
         },
     },
-    experimental: {
-        renderBuiltUrl(filename, { hostType }) {
-            if (hostType === 'js') {
-                return { js: `/${filename}` }
-            }
-            return { relative: true }
-        }
-    }
 });
