@@ -13,15 +13,16 @@ export default defineConfig({
     build: {
         outDir: 'public/build',
         emptyOutDir: true,
-        manifest: true,
+        manifest: 'manifest.json', // Pastikan nama file manifest benar
+        assetsDir: 'assets',
         rollupOptions: {
-            input: {
-                app: 'resources/js/app.js'
-            }
-        }
+            output: {
+                manualChunks: undefined,
+            },
+        },
     },
     server: {
         host: '0.0.0.0',
         port: 5173,
-    }
+    },
 });
