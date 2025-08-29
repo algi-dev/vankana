@@ -95,7 +95,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
 
         if (!allowedTypes.includes(file.type)) {
             e.preventDefault();
-            alert('Format gambar tidak didukung. Harap pilih file JPG, PNG, WEBP, atau GIF.');
+            alert('Format gambar tidak didukung. Harap pilih file JPG, PNG, webp, atau GIF.');
             return;
         }
 
