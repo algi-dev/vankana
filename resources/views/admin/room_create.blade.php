@@ -8,6 +8,12 @@
 <div class="bg-white p-6 rounded-lg shadow">
     <h2 class="text-xl font-semibold mb-4">Tambah Kamar Baru</h2>
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{  session('error') }}
+        </div>
+    @endif
+
     <form action="{{ route('admin.room.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
