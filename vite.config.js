@@ -13,11 +13,14 @@ export default defineConfig({
     build: {
         outDir: 'public/build',
         emptyOutDir: true,
-        manifest: true, // Ubah ke true, bukan string
+        manifest: true,
         assetsDir: 'assets',
         rollupOptions: {
             output: {
                 manualChunks: undefined,
+                entryFileNames: 'assets/[name]-[hash].js',
+                chunkFileNames: 'assets/[name]-[hash].js',
+                assetFileNames: 'assets/[name]-[hash].[ext]'
             },
         },
     },
@@ -28,4 +31,12 @@ export default defineConfig({
             host: 'localhost',
         },
     },
+    experimental: {
+        renderBuiltUrl(filename, { hostType }) {
+            if (hostType === 'js') {
+                return { js: `/${filename}` }
+            }
+            return { relative: true }
+        }
+    }
 });
