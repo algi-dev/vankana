@@ -268,6 +268,7 @@ h3, .sub-title {
         background: #e67e22;
     }
 
+</style>
     </style>
 </head>
 <body>

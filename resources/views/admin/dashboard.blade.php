@@ -121,6 +121,9 @@
                 <div class="text-2xl font-bold text-teal-600">{{ \App\Models\Accessibility::count() }}</div>
                 <div class="text-sm text-gray-600">Akses & Kuliner</div>
             </div>
+            <a href="{{ route('admin.home.sections') }}" class="p-4 bg-yellow-500 text-white rounded-lg text-center hover:bg-yellow-600 transition">
+    <div class="font-bold">Kelola Home</div>
+</a>
         </div>
     </div>
 </div>

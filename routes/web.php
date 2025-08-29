@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\HotelPolicyController;
 use App\Http\Controllers\AccessibilityController;
+use App\Http\Controllers\HomeSectionController;
 
 // ================================
 // ROUTE WEB UTAMA (PUBLIC)
@@ -90,6 +91,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/accessibilities/{id}/edit', [AccessibilityController::class, 'edit'])->name('accessibilities.edit');
         Route::put('/accessibilities/{id}', [AccessibilityController::class, 'update'])->name('accessibilities.update');
         Route::delete('/accessibilities/{id}', [AccessibilityController::class, 'destroy'])->name('accessibilities.destroy');
+
+        // ================================
+        // CRUD HOME SECTION
+        // ================================
+        Route::get('/home-sections', [HomeSectionController::class, 'index'])->name('home.sections');
+        Route::get('/home-sections/create', [HomeSectionController::class, 'create'])->name('home.sections.create');
+        Route::post('/home-sections', [HomeSectionController::class, 'store'])->name('home.sections.store');
+        Route::get('/home-sections/{id}/edit', [HomeSectionController::class, 'edit'])->name('home.sections.edit');
+        Route::put('/home-sections/{id}', [HomeSectionController::class, 'update'])->name('home.sections.update');
+        Route::delete('/home-sections/{id}', [HomeSectionController::class, 'destroy'])->name('home.sections.destroy');
 
         // Logout
         Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
