@@ -36,15 +36,6 @@
                 <label class="block mb-1 font-medium">Harga (Rp)</label>
                 <input type="number" step="0.01" name="price" class="w-full border rounded p-2" value="{{ $room->price }}" required>
             </div>
-            <div>
-                <label class="block mb-1 font-medium">Kapasitas (orang)</label>
-                <input type="number" name="capacity" class="w-full border rounded p-2" value="{{ $room->capacity }}" min="1">
-            </div>
-            <div>
-                <label class="block mb-1 font-medium">Ukuran Kamar</label>
-                <input type="text" name="size" class="w-full border rounded p-2" value="{{ $room->size }}" placeholder="30 m²">
-            </div>
-        </div>
 
         <!-- Pratinjau Gambar Lama -->
         <div class="mb-4">
