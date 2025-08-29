@@ -13,7 +13,7 @@ export default defineConfig({
     build: {
         outDir: 'public/build',
         emptyOutDir: true,
-        manifest: 'manifest.json', // Pastikan nama file manifest benar
+        manifest: true, // Ubah ke true, bukan string
         assetsDir: 'assets',
         rollupOptions: {
             output: {
@@ -24,5 +24,8 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         port: 5173,
+        hmr: {
+            host: 'localhost',
+        },
     },
 });
